@@ -61,7 +61,7 @@
 
 /* Page transition wrapper */
 .page-transition-wrapper {
-  @apply animate-fade-in;
+  @apply transition-all duration-300 ease-in-out;
 }
 
 /* Reflection Effect */
@@ -177,4 +177,49 @@
   100% {
     opacity: 0.6;
   }
+}
+
+/* Smooth transitions for all elements */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Element transitions */
+.fade-element {
+  transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+}
+
+.fade-element.entering, .fade-element.exiting {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.fade-element.entered {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Page transitions */
+.page-fade-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-fade-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.page-fade-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-fade-exit-active {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 300ms, transform 300ms;
 }

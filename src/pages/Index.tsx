@@ -6,6 +6,9 @@ const Index = () => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // Apply transitions to document
+    document.documentElement.classList.add('transition-colors', 'duration-300');
+    
     setMounted(true);
     
     // Check for user preference

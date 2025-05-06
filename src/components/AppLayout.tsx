@@ -49,7 +49,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
       setPageTransition(true);
       const timer = setTimeout(() => {
         setPageTransition(false);
-      }, 500);
+      }, 300); // Reduced from 500ms for smoother transitions
       setCurrentPath(location.pathname);
       return () => clearTimeout(timer);
     }
@@ -110,8 +110,11 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           {links.map((link, index) => (
             <div
               key={link.to}
-              className="group"
-              style={{ animationDelay: `${index * 0.05}s` }}
+              className="group transition-transform ease-in-out"
+              style={{ 
+                animationDelay: `${index * 0.05}s`,
+                transitionDelay: `${index * 0.03}s`
+              }}
             >
               <SidebarLink
                 to={link.to}
@@ -148,7 +151,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           </button>
           
           <div className="ml-4 flex-1">
-            <h2 className="text-lg font-semibold animate-fade-in">
+            <h2 className="text-lg font-semibold transition-opacity duration-200 ease-in-out">
               {links.find(link => link.to === location.pathname)?.label || "Dashboard"}
             </h2>
           </div>
@@ -169,11 +172,11 @@ const AppLayout = ({ children }: AppLayoutProps) => {
         {/* Content Area with Background Pattern */}
         <div 
           className={cn(
-            "flex-1 overflow-y-auto scrollbar-none p-6 bg-mesh-pattern dark:bg-mesh-pattern light:bg-light-mesh-pattern bg-opacity-5 transition-all duration-500",
-            pageTransition ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
+            "flex-1 overflow-y-auto scrollbar-none p-6 bg-mesh-pattern dark:bg-mesh-pattern light:bg-light-mesh-pattern bg-opacity-5 transition-all duration-500 ease-in-out",
+            pageTransition ? "opacity-50 translate-y-2" : "opacity-100 translate-y-0"
           )}
         >
-          <div className="animate-fade-in">
+          <div className="transition-all duration-300 ease-in-out">
             {children}
           </div>
         </div>

@@ -4,6 +4,7 @@ import { Moon, Sun } from 'lucide-react';
 
 const ThemeToggle = () => {
   const [isDark, setIsDark] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     // Initialize theme from localStorage or system preference
@@ -19,9 +20,18 @@ const ThemeToggle = () => {
   }, []);
 
   const toggleTheme = () => {
+    setIsTransitioning(true);
     const newTheme = !isDark;
-    setIsDark(newTheme);
-    updateTheme(newTheme);
+    
+    // Small delay to allow transition effects to play
+    setTimeout(() => {
+      setIsDark(newTheme);
+      updateTheme(newTheme);
+      
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 300);
+    }, 50);
   };
 
   const updateTheme = (dark: boolean) => {
@@ -34,14 +44,17 @@ const ThemeToggle = () => {
   return (
     <button 
       onClick={toggleTheme} 
-      className="p-2 rounded-lg transition-colors duration-200 hover:bg-sidebar-accent"
+      className="p-2 rounded-lg transition-all duration-300 hover:bg-sidebar-accent relative overflow-hidden"
       aria-label="Toggle theme"
+      disabled={isTransitioning}
     >
-      {isDark ? (
-        <Sun size={20} className="text-yellow-300" />
-      ) : (
-        <Moon size={20} className="text-slate-600" />
-      )}
+      <div className={`transition-all duration-300 transform ${isTransitioning ? 'scale-90 opacity-50' : 'scale-100 opacity-100'}`}>
+        {isDark ? (
+          <Sun size={20} className="text-yellow-300" />
+        ) : (
+          <Moon size={20} className="text-slate-600" />
+        )}
+      </div>
     </button>
   );
 };

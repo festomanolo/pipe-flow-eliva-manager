@@ -6,14 +6,12 @@ interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   className?: string;
   glow?: boolean;
-  reveal?: boolean;
 }
 
 const GlassCard = ({ 
   children, 
   className, 
-  glow = false, 
-  reveal = false,
+  glow = false,
   ...props 
 }: GlassCardProps) => {
   return (
@@ -21,7 +19,6 @@ const GlassCard = ({
       className={cn(
         "glass-card transition-all duration-300",
         glow && "group glow-effect",
-        reveal && "animate-fade-in",
         className
       )}
       {...props}
