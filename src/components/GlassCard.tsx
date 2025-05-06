@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
 interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -16,12 +16,25 @@ const GlassCard = ({
   reveal = false,
   ...props 
 }: GlassCardProps) => {
+  const [isVisible, setIsVisible] = useState(!reveal);
+
+  useEffect(() => {
+    if (reveal) {
+      // Short delay to ensure component is mounted before animation
+      const timer = setTimeout(() => {
+        setIsVisible(true);
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [reveal]);
+
   return (
     <div
       className={cn(
         "glass-card transition-all duration-300",
         glow && "group glow-effect",
-        reveal && "animate-fade-in",
+        reveal && isVisible && "animate-fade-in",
+        reveal && !isVisible && "opacity-0",
         className
       )}
       {...props}
