@@ -17,13 +17,16 @@ const GlassCard = ({
   return (
     <div
       className={cn(
-        "glass-card transition-all duration-300",
-        glow && "group glow-effect",
+        "glass-card relative overflow-hidden rounded-lg border border-white/10 bg-white/5 backdrop-blur-lg shadow-lg transition-all duration-300",
+        glow && "group glow-effect hover:border-white/20 hover:shadow-xl",
         className
       )}
       {...props}
     >
-      <div className="glass-card-inner">
+      {glow && (
+        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-eliva-accent/20 via-transparent to-eliva-purple/20 opacity-0 transition-opacity duration-700 group-hover:opacity-100 blur-xl"></div>
+      )}
+      <div className="glass-card-inner relative z-10">
         {children}
       </div>
     </div>
