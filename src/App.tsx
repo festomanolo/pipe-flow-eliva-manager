@@ -12,6 +12,7 @@ import Sales from "./pages/Sales";
 import Customers from "./pages/Customers";
 import Reports from "./pages/Reports";
 import Analytics from "./pages/Analytics";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 
@@ -104,10 +105,7 @@ const App = () => (
           <Route path="/settings" element={
             <AuthRoute>
               <AppLayout>
-                <div className="p-6">
-                  <h1 className="text-2xl font-bold mb-4">Settings</h1>
-                  <p className="text-muted-foreground">Application settings page is under development.</p>
-                </div>
+                <Settings />
               </AppLayout>
             </AuthRoute>
           } />

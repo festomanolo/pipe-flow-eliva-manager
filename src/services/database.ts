@@ -59,19 +59,62 @@ interface ElectronAPI {
   addProduct: (product: Omit<Product, 'id' | 'type_name'>) => Promise<{ success: boolean, id?: number, error?: string }>;
   updateProduct: (id: number, updates: Partial<Omit<Product, 'id' | 'type_name'>>) => Promise<{ success: boolean, changes?: number, error?: string }>;
   deleteProduct: (id: number) => Promise<{ success: boolean, changes?: number, error?: string }>;
+  openExternalLink: (url: string) => Promise<void>;
 }
 
 // Get the API from the window object
-const api = window as unknown as Window & {
-  api: ElectronAPI;
+declare global {
+  interface Window {
+    api?: ElectronAPI;
+  }
+}
+
+// Check if running in Electron
+const isElectron = () => {
+  return window.api !== undefined;
 };
+
+// Mock API for development when not running in Electron
+const mockAPI: ElectronAPI = {
+  authenticate: async (username: string, password: string) => {
+    console.log('Mock authenticate called', { username, password });
+    return username === 'eliva' && password === 'eliva@2011';
+  },
+  getProducts: async () => {
+    console.log('Mock getProducts called');
+    return [];
+  },
+  getProductTypes: async () => {
+    console.log('Mock getProductTypes called');
+    return [];
+  },
+  addProduct: async () => {
+    console.log('Mock addProduct called');
+    return { success: true, id: 1 };
+  },
+  updateProduct: async () => {
+    console.log('Mock updateProduct called');
+    return { success: true, changes: 1 };
+  },
+  deleteProduct: async () => {
+    console.log('Mock deleteProduct called');
+    return { success: true, changes: 1 };
+  },
+  openExternalLink: async (url: string) => {
+    console.log('Mock openExternalLink called', { url });
+    window.open(url, '_blank');
+  }
+};
+
+// Use the real API if available, otherwise use the mock
+const api = isElectron() ? window.api! : mockAPI;
 
 // Database service
 const DatabaseService = {
   // Authentication
   authenticate: async (username: string, password: string): Promise<boolean> => {
     try {
-      return await api.api.authenticate(username, password);
+      return await api.authenticate(username, password);
     } catch (error) {
       console.error('Authentication error:', error);
       return false;
@@ -81,7 +124,7 @@ const DatabaseService = {
   // Product operations
   getProducts: async (): Promise<Product[]> => {
     try {
-      return await api.api.getProducts();
+      return await api.getProducts();
     } catch (error) {
       console.error('Get products error:', error);
       return [];
@@ -90,7 +133,7 @@ const DatabaseService = {
   
   getProductTypes: async (): Promise<ProductType[]> => {
     try {
-      return await api.api.getProductTypes();
+      return await api.getProductTypes();
     } catch (error) {
       console.error('Get product types error:', error);
       return [];
@@ -99,7 +142,7 @@ const DatabaseService = {
   
   addProduct: async (product: Omit<Product, 'id' | 'type_name'>): Promise<{ success: boolean, id?: number, error?: string }> => {
     try {
-      return await api.api.addProduct(product);
+      return await api.addProduct(product);
     } catch (error) {
       console.error('Add product error:', error);
       return { success: false, error: String(error) };
@@ -108,7 +151,7 @@ const DatabaseService = {
   
   updateProduct: async (id: number, updates: Partial<Omit<Product, 'id' | 'type_name'>>): Promise<{ success: boolean, changes?: number, error?: string }> => {
     try {
-      return await api.api.updateProduct(id, updates);
+      return await api.updateProduct(id, updates);
     } catch (error) {
       console.error('Update product error:', error);
       return { success: false, error: String(error) };
@@ -117,10 +160,21 @@ const DatabaseService = {
   
   deleteProduct: async (id: number): Promise<{ success: boolean, changes?: number, error?: string }> => {
     try {
-      return await api.api.deleteProduct(id);
+      return await api.deleteProduct(id);
     } catch (error) {
       console.error('Delete product error:', error);
       return { success: false, error: String(error) };
+    }
+  },
+
+  // External link handling
+  openExternalLink: async (url: string): Promise<void> => {
+    try {
+      return await api.openExternalLink(url);
+    } catch (error) {
+      console.error('Open external link error:', error);
+      // Fallback to regular browser opening
+      window.open(url, '_blank');
     }
   },
 };

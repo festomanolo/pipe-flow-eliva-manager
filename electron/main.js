@@ -1,5 +1,5 @@
 
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, shell } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
 const Database = require('better-sqlite3');
@@ -12,9 +12,16 @@ function createWindow() {
     width: 1200,
     height: 800,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
+      nodeIntegration: false,
+      contextIsolation: true,
+      preload: path.join(__dirname, 'preload.js'),
     },
+    // Set app icon
+    icon: path.join(__dirname, '../logo.png'),
+    // Make the window look modern
+    frame: true,
+    transparent: false,
+    backgroundColor: '#0F172A',
   });
 
   const startUrl = isDev 
@@ -37,6 +44,12 @@ function createWindow() {
       db.close();
       db = null;
     }
+  });
+
+  // Handle external links in default browser
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    shell.openExternal(url);
+    return { action: 'deny' };
   });
 }
 
@@ -282,6 +295,12 @@ ipcMain.handle('delete-product', (event, id) => {
     console.error('Delete product error:', error);
     return { success: false, error: error.message };
   }
+});
+
+// Handle external links
+ipcMain.handle('open-external-link', (event, url) => {
+  shell.openExternal(url);
+  return true;
 });
 
 // Handle other database operations for customers, sales, etc.
