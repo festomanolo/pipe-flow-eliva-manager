@@ -1,9 +1,9 @@
 
 import React, { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
-import { motion } from 'framer-motion';
+import { motion, HTMLMotionProps } from 'framer-motion';
 
-interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
+interface GlassCardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onDrag'> {
   children: React.ReactNode;
   className?: string;
   glow?: boolean;
@@ -69,7 +69,7 @@ const GlassCard = ({
           "--highlight-x": "50%", 
           "--highlight-y": "50%" 
         } as React.CSSProperties}
-        {...props}
+        {...props as HTMLMotionProps<"div">}
       >
         {glow && (
           <div className="absolute inset-0 -z-10 bg-gradient-to-br from-eliva-accent/30 via-transparent to-eliva-purple/30 opacity-0 transition-opacity duration-700 group-hover:opacity-100 blur-xl"></div>
