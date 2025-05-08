@@ -12,7 +12,7 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('dark');
+  const [theme, setTheme] = useState<Theme>('dark'); // Default to dark theme
 
   useEffect(() => {
     // Check for stored theme preference
@@ -22,11 +22,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       setTheme(storedTheme);
       document.documentElement.classList.toggle('dark', storedTheme === 'dark');
     } else {
-      // Check for system preference if no stored preference
-      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setTheme(systemPrefersDark ? 'dark' : 'light');
-      document.documentElement.classList.toggle('dark', systemPrefersDark);
-      localStorage.setItem('theme', systemPrefersDark ? 'dark' : 'light');
+      // Default to dark theme if no stored preference
+      setTheme('dark');
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
     }
     
     // Listen for system theme changes

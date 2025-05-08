@@ -1,0 +1,19 @@
+
+appId: com.pipe-flow-eliva-manager
+productName: Pipe Flow Eliva Manager
+directories:
+  output: dist_electron
+  buildResources: resources
+files:
+  - from: dist
+    to: .
+  - from: electron
+    to: .
+mac:
+  category: public.app-category.business
+  target: dmg
+win:
+  target: nsis
+linux:
+  target: AppImage
+  category: Office

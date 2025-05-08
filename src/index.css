@@ -48,30 +48,30 @@
   }
 
   .dark {
-    /* Dark theme - restored to match the original app */
+    /* Dark theme - restored to match the original app with white text */
     --background: 222 47% 11%;
-    --foreground: 215 20% 90%;
+    --foreground: 0 0% 100%; /* White text */
 
     --card: 222 33% 17%;
-    --card-foreground: 215 20% 95%;
+    --card-foreground: 0 0% 100%; /* White text */
 
     --popover: 222 33% 17%;
-    --popover-foreground: 215 20% 95%;
+    --popover-foreground: 0 0% 100%; /* White text */
 
     --primary: 252 94% 67%;
-    --primary-foreground: 210 40% 98%;
+    --primary-foreground: 0 0% 100%; /* White text */
 
     --secondary: 222 47% 20%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary-foreground: 0 0% 100%; /* White text */
 
     --muted: 222 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted-foreground: 215 20% 85%; /* Lighter muted text for dark mode */
 
     --accent: 252 94% 67%;
-    --accent-foreground: 210 40% 98%;
+    --accent-foreground: 0 0% 100%; /* White text */
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%; /* White text */
 
     --border: 222 33% 25%;
     --input: 222 33% 25%;
@@ -81,11 +81,11 @@
 
     /* Sidebar dark theme */
     --sidebar-background: 222 47% 8%;
-    --sidebar-foreground: 215 20% 75%;
+    --sidebar-foreground: 0 0% 100%; /* White text */
     --sidebar-primary: 252 94% 67%;
-    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-primary-foreground: 0 0% 100%; /* White text */
     --sidebar-accent: 223 47% 15%;
-    --sidebar-accent-foreground: 215 20% 75%;
+    --sidebar-accent-foreground: 0 0% 100%; /* White text */
     --sidebar-border: 223 47% 15%;
     --sidebar-ring: 252 94% 70%;
   }
