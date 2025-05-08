@@ -3,13 +3,28 @@ import React, { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { motion, HTMLMotionProps } from 'framer-motion';
 
-interface GlassCardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onDrag'> {
+// Create a separate interface for HTML props excluding motion props
+interface GlassCardBaseProps {
   children: React.ReactNode;
   className?: string;
   glow?: boolean;
   reveal?: boolean;
   revealDelay?: number;
 }
+
+// Combine with HTMLMotionProps for the revealed card case
+type GlassCardRevealProps = GlassCardBaseProps & HTMLMotionProps<"div">;
+
+// Regular HTML props for the non-revealed card case
+type GlassCardStandardProps = GlassCardBaseProps & React.HTMLAttributes<HTMLDivElement>;
+
+// Union type to handle both cases
+type GlassCardProps = GlassCardBaseProps & {
+  reveal?: boolean;
+} & (
+  { reveal: true } & Omit<HTMLMotionProps<"div">, keyof GlassCardBaseProps> | 
+  { reveal?: false } & Omit<React.HTMLAttributes<HTMLDivElement>, keyof GlassCardBaseProps>
+);
 
 const GlassCard = ({ 
   children, 
