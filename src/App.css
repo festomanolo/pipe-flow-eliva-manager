@@ -1,3 +1,4 @@
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -39,4 +40,46 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* Animation Classes */
+.animated-gradient {
+  background: linear-gradient(-45deg, #6E59A5, #8B5CF6, #6E59A5, #8B5CF6);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.pulse-shadow {
+  animation: pulseShadow 3s infinite;
+}
+
+@keyframes pulseShadow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(139, 92, 246, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
+  }
+}
+
+/* Special element styling */
+.expertise-tag {
+  @apply px-3 py-1.5 rounded-full text-sm font-medium inline-flex items-center 
+    justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500
+    text-white shadow-md transition-all duration-300 hover:scale-105 hover:shadow-lg;
 }

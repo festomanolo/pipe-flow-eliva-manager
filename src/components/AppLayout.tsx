@@ -6,6 +6,7 @@ import {
   ChartPie, ShoppingCart, Settings, Package, Users, FileText, 
   ChartBar, Menu, X, LogOut 
 } from 'lucide-react';
+import ThemeToggle from './ThemeToggle';
 
 interface SidebarLinkProps {
   to: string;
@@ -47,14 +48,15 @@ const AppLayout = ({ children }: AppLayoutProps) => {
     { to: "/reports", icon: <FileText size={20} />, label: "Reports" },
     { to: "/analytics", icon: <ChartBar size={20} />, label: "Analytics" },
     { to: "/settings", icon: <Settings size={20} />, label: "Settings" },
+    { to: "/about", icon: <Users size={20} />, label: "About" },
   ];
 
   return (
-    <div className="flex h-screen overflow-hidden bg-eliva-background">
+    <div className="flex h-screen overflow-hidden bg-gray-50 dark:bg-eliva-background transition-colors duration-300">
       {/* Sidebar */}
       <aside 
         className={cn(
-          "bg-sidebar h-full flex-shrink-0 flex flex-col border-r border-white/10 transition-all",
+          "bg-sidebar h-full flex-shrink-0 flex flex-col border-r border-gray-200 dark:border-white/10 transition-all",
           isSidebarOpen ? "w-64" : "w-0 overflow-hidden md:w-20"
         )}
       >
@@ -114,7 +116,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
       {/* Main Content */}
       <main className="flex-1 flex flex-col h-full overflow-hidden">
         {/* Top Bar */}
-        <header className="h-16 border-b border-white/10 flex items-center px-4 bg-sidebar/50 backdrop-blur-md">
+        <header className="h-16 border-b border-gray-200 dark:border-white/10 flex items-center px-4 bg-white/50 dark:bg-sidebar/50 backdrop-blur-md">
           <button 
             onClick={toggleSidebar}
             className="p-2 rounded-md hover:bg-sidebar-accent text-sidebar-foreground md:hidden"
@@ -128,7 +130,8 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             </h2>
           </div>
           
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
+            <ThemeToggle />
             <button className="glass-button text-sm">
               <ShoppingCart size={16} className="mr-2 inline" />
               New Sale
@@ -138,7 +141,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
         
         {/* Content Area with Background Pattern */}
         <div 
-          className="flex-1 overflow-y-auto scrollbar-none p-6 bg-mesh-pattern bg-opacity-5"
+          className="flex-1 overflow-y-auto scrollbar-none p-6 dark:bg-mesh-pattern light:bg-light-mesh-pattern bg-opacity-5 dark:bg-opacity-5 transition-colors duration-300"
         >
           {children}
         </div>
