@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { 
   ChartPie, TrendingUp, ArrowUpRight, ChartBar, ChartLine, Calendar,
@@ -547,7 +548,8 @@ const Analytics = () => {
                         >
                           <Cell fill="#6E59A5" />
                           <Cell fill="#10B981" />
-                        </BarChart>
+                        </Bar>
+                      </BarChart>
                     </ResponsiveContainer>
                   </div>
                 </div>
