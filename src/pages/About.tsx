@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { Phone, Globe, Code, Cpu, Smartphone, Monitor, ExternalLink } from 'lucide-react';
 import GlassCard from '@/components/GlassCard';
 import { useTheme } from '@/components/ThemeProvider';
-import { shell } from '@electron/remote';
 
 const skills = [
   { name: "ElectronJS", icon: <Cpu className="text-purple-500" size={24} /> },
@@ -62,8 +61,9 @@ const AboutPage = () => {
     }
   }, []);
 
+  // Replace the Electron shell with standard browser window.open
   const handleOpenLink = (url: string) => {
-    shell.openExternal(url);
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   return (
