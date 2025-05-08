@@ -5,49 +5,7 @@
 
 @layer base {
   :root {
-    /* Light theme */
-    --background: 210 40% 98%;
-    --foreground: 222 47% 11%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-
-    --primary: 252 94% 67%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
-
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 25% 40%;
-
-    --accent: 252 94% 67%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 252 94% 70%;
-
-    --radius: 0.75rem;
-
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 222 47% 20%;
-    --sidebar-primary: 252 94% 67%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 214 32% 91%;
-    --sidebar-accent-foreground: 222 47% 20%;
-    --sidebar-border: 214 32% 91%;
-    --sidebar-ring: 252 94% 70%;
-  }
-
-  .dark {
-    /* Dark theme */
+    /* Dark theme by default */
     --background: 222 47% 11%;
     --foreground: 215 20% 90%;
 
@@ -119,9 +77,8 @@
 }
 
 @layer components {
-  /* Glassmorphism Effects */
   .glass-card {
-    @apply relative bg-card/40 backdrop-blur-md border border-white/10 shadow-lg rounded-xl overflow-hidden transition-all;
+    @apply relative bg-eliva-card/40 backdrop-blur-md border border-white/10 shadow-lg rounded-xl overflow-hidden;
   }
 
   .glass-card::before {
@@ -129,12 +86,8 @@
     @apply absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none;
   }
 
-  .glass-card-inner {
-    @apply relative z-10;
-  }
-
   .glass-panel {
-    @apply bg-card/80 backdrop-blur-md border border-white/10 rounded-xl shadow-lg transition-all;
+    @apply bg-eliva-card/80 backdrop-blur-md border border-white/10 rounded-xl shadow-lg;
   }
 
   .glass-button {
@@ -142,9 +95,8 @@
            border border-white/10 rounded-lg px-4 py-2 shadow-md;
   }
 
-  /* Glow Effects */
   .glow-effect {
-    @apply relative transition-all duration-300;
+    @apply relative;
   }
 
   .glow-effect::after {
@@ -154,12 +106,10 @@
     z-index: -1;
   }
 
-  /* Card Styles */
   .dashboard-card {
     @apply glass-card p-4 h-full transition-all duration-300 hover:translate-y-[-5px] hover:shadow-xl;
   }
 
-  /* Navigation Styles */
   .nav-link {
     @apply flex items-center gap-3 px-3 py-2 rounded-lg text-sidebar-foreground hover:text-white 
            hover:bg-sidebar-accent transition-all duration-200;
@@ -168,104 +118,4 @@
   .nav-link.active {
     @apply bg-sidebar-accent text-white;
   }
-  
-  /* Page Transitions */
-  .page-enter {
-    @apply opacity-0 translate-y-4;
-  }
-  
-  .page-enter-active {
-    @apply opacity-100 translate-y-0 transition-all duration-300 ease-out;
-  }
-  
-  .page-exit {
-    @apply opacity-100 translate-y-0;
-  }
-  
-  .page-exit-active {
-    @apply opacity-0 translate-y-4 transition-all duration-300 ease-in;
-  }
-}
-
-/* Animation Keyframes */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideIn {
-  from { transform: translateX(-20px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-}
-
-@keyframes scaleIn {
-  from { transform: scale(0.95); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-@keyframes shimmer {
-  0% { background-position: -1000px 0; }
-  100% { background-position: 1000px 0; }
-}
-
-/* Additional Animation Classes */
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
-}
-
-.animate-slide-in {
-  animation: slideIn 0.5s ease-out forwards;
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.3s ease-out forwards;
-}
-
-.animate-pulse {
-  animation: pulse 2s infinite ease-in-out;
-}
-
-.animate-float {
-  animation: float 6s infinite ease-in-out;
-}
-
-.shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-  background-size: 1000px 100%;
-  animation: shimmer 2s infinite linear;
-}
-
-/* Light Mode Enhancements */
-.light .glass-card {
-  @apply bg-white/70 border-slate-200/50 shadow-md;
-}
-
-.light .glass-card::before {
-  @apply from-white/40 to-transparent;
-}
-
-.light .glass-panel {
-  @apply bg-white/80 border-slate-200/50;
-}
-
-.light .glass-button {
-  @apply bg-eliva-purple/20 text-eliva-purple border-eliva-purple/20;
-}
-
-.light .nav-link {
-  @apply text-slate-600 hover:text-eliva-purple hover:bg-slate-100;
-}
-
-.light .nav-link.active {
-  @apply bg-slate-100 text-eliva-purple;
 }

@@ -1,5 +1,4 @@
 
-import { useState, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -12,38 +11,9 @@ import Sales from "./pages/Sales";
 import Customers from "./pages/Customers";
 import Reports from "./pages/Reports";
 import Analytics from "./pages/Analytics";
-import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
-import Login from "./pages/Login";
 
 const queryClient = new QueryClient();
-
-const AuthRoute = ({ children }: { children: React.ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true);
-  
-  useEffect(() => {
-    // Check if user is authenticated
-    const checkAuth = async () => {
-      const auth = localStorage.getItem('elivaAuth') === 'true';
-      setIsAuthenticated(auth);
-      setLoading(false);
-    };
-    
-    checkAuth();
-  }, []);
-  
-  if (loading) {
-    // Could show a loading spinner here
-    return null;
-  }
-  
-  return isAuthenticated ? (
-    <>{children}</>
-  ) : (
-    <Navigate to="/login" replace />
-  );
-};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -52,64 +22,44 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          
           <Route path="/" element={
-            <AuthRoute>
-              <AppLayout>
-                <Dashboard />
-              </AppLayout>
-            </AuthRoute>
+            <AppLayout>
+              <Dashboard />
+            </AppLayout>
           } />
-          
           <Route path="/inventory" element={
-            <AuthRoute>
-              <AppLayout>
-                <Inventory />
-              </AppLayout>
-            </AuthRoute>
+            <AppLayout>
+              <Inventory />
+            </AppLayout>
           } />
-          
           <Route path="/sales" element={
-            <AuthRoute>
-              <AppLayout>
-                <Sales />
-              </AppLayout>
-            </AuthRoute>
+            <AppLayout>
+              <Sales />
+            </AppLayout>
           } />
-          
           <Route path="/customers" element={
-            <AuthRoute>
-              <AppLayout>
-                <Customers />
-              </AppLayout>
-            </AuthRoute>
+            <AppLayout>
+              <Customers />
+            </AppLayout>
           } />
-          
           <Route path="/reports" element={
-            <AuthRoute>
-              <AppLayout>
-                <Reports />
-              </AppLayout>
-            </AuthRoute>
+            <AppLayout>
+              <Reports />
+            </AppLayout>
           } />
-          
           <Route path="/analytics" element={
-            <AuthRoute>
-              <AppLayout>
-                <Analytics />
-              </AppLayout>
-            </AuthRoute>
+            <AppLayout>
+              <Analytics />
+            </AppLayout>
           } />
-          
           <Route path="/settings" element={
-            <AuthRoute>
-              <AppLayout>
-                <Settings />
-              </AppLayout>
-            </AuthRoute>
+            <AppLayout>
+              <div className="p-6">
+                <h1 className="text-2xl font-bold mb-4">Settings</h1>
+                <p className="text-muted-foreground">Application settings page is under development.</p>
+              </div>
+            </AppLayout>
           } />
-          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
